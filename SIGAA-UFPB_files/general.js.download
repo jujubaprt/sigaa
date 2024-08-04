@@ -1,0 +1,131 @@
+/**
+ * Universidade Federal da Paraíba
+ * STI - Superintendência de Tecnologia da Informação
+ * Gerência de Sistemas da Informação
+ *
+ * Criado em: 11/04/2019.
+ *
+ * Script criado para adicionar algumas funcionalidades globais no sistema.
+ * 
+ * Atualmente o Script:
+ * - Previne que as páginas do SIGAA sejam carregadas dentro de IFRAMES.
+ * - Previne cliques duplos em botões e links do sistema.
+ * 
+ * @author Fabiano <fabiano@sti.ufpb.br>
+ */
+
+var useGeneralJS = typeof useGeneralJS === 'boolean' ? useGeneralJS : false;
+
+/** PREVENT IFRAME SCRIPT */
+if(useGeneralJS && window.top != window.self) {
+	top.location.href = document.location.href;
+}
+
+/** PREVENT DOUBLE CLICK SCRIPT */
+// Algumas bibliotecas usam a mesma variável do jQuery: $, foi feito um tratamento no Script para esses casos.
+var anotherLib = typeof $ !== 'undefined' && !$.noConflict && typeof anotherLib === 'undefined' ?
+		$ :  typeof anotherLib !== 'undefined' ?
+				anotherLib : undefined;
+
+var activeJQuery = typeof activeJQuery !== 'undefined' ? activeJQuery : typeof jQuery !== 'undefined' ? jQuery : undefined
+var alreadyCalled = typeof alreadyCalled === 'boolean' ? alreadyCalled : false;
+
+// Só executa se nunca tiver sido chamado antes e se houver JQuery na página.
+if(useGeneralJS && !alreadyCalled && activeJQuery) {
+	alreadyCalled = true;
+	
+	activeJQuery(document).ready(() => {
+		const style = document.createElement('style');
+
+		style.innerHTML =
+			'.disabledLink {' +
+				'color: currentColor;' +
+				'cursor: not-allowed;' +
+				'display: inline-block; /* For IE11/ MS Edge bug */' +
+				'pointer-events: none;' +
+				'text-decoration: none;' +
+			'}';
+		
+		var ref = document.querySelector('script');
+		ref.parentNode.insertBefore(style, ref);
+		
+		const selector = "a:not(.toggleable),button:not(.toggleable),input[type='submit']:not(.toggleable),input[type='button']:not(.toggleable)";
+		const preventDoubleClick = e => {
+			// Para debugar:
+			// console.log(activeJQuery(e.target).get(0).tagName + ' DESABILITADO, PARA EVITAR MÚLTIPLOS CLIQUES.');
+			
+			if(typeof activeJQuery(e.target).attr('onclick') === 'string' && activeJQuery(e.target).attr('onclick').indexOf('confirm') > -1) {
+				return;
+			}
+			
+			setTimeout(() => {
+				activeJQuery('.disabledLink').removeClass('disabledLink').attr('disabled', false);
+				
+				activeJQuery(e.target)
+					.attr('disabled', true)
+					.css('display', activeJQuery(e.target).css('display'))
+					.addClass('disabledLink');
+				
+				activeJQuery(e.target).find('*')
+					.attr('disabled', true)
+					.addClass('disabledLink');
+				
+				if(['A'].indexOf(activeJQuery(e.target).parent().get(0).tagName) > -1) {
+					activeJQuery(e.target).parent()
+						.attr('disabled', true)
+						.css('display', activeJQuery(e.target).css('display') === "block" ?
+							activeJQuery(e.target).css('display') : activeJQuery(e.target).parent().css('display'))
+						.addClass('disabledLink');
+				}
+			}, 50);
+		}
+		
+		// IFs Criados para ser compatível com as diversas versões de JQuery que estão espalhadas pelo SIGAA. >.< 
+		if(activeJQuery(document).on) {
+			activeJQuery(document).on('click', selector, preventDoubleClick);	
+		} else if (activeJQuery(document).delegate) {
+			activeJQuery(document).delegate('click', selector, preventDoubleClick);
+		} else {
+			activeJQuery(selector).live('click', preventDoubleClick);
+		}
+	});
+} else if(useGeneralJS && !activeJQuery) { // Se não houver JQuery na tela, insira o JQuery e recarregue o script.
+	if(anotherLib) { // Se outra biblioteca utiliza a variável $, aguarde um pouco para inserir o JQuery
+		setTimeout(() => {
+			addJQuery();
+		}, 1000);
+	} else {
+		addJQuery();
+	}
+}
+
+// Função que adiciona um JQuery na página, caso ele não exista.
+function addJQuery() {
+	var jQueryScript = document.createElement('script');
+	jQueryScript.type = 'text/javascript';
+	jQueryScript.src = '/sigaa/shared/beta/js/jquery-3.2.1.min.js';	
+	getHead().appendChild(jQueryScript);
+	
+	wait4JQuery();
+}
+
+// Função fica sendo chamada até o JQuery ser carregado na página.
+function wait4JQuery() {	
+	setTimeout(() => {
+		if($.noConflict) {
+			activeJQuery = $;
+			$ = typeof anotherLib !== 'undefined' ? anotherLib : typeof $ !== 'undefined' ? $ : undefined;
+			
+			var script = document.createElement('script');
+			script.type = 'text/javascript';
+			script.src = '/sigaa/shared/javascript/general.js';
+			getHead().appendChild(script);
+		} else {
+			wait4JQuery();
+		}
+	}, 500);
+}
+
+function getHead() {
+	return document.getElementsByTagName('head')[0];
+}
